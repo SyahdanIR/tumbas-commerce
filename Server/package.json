@@ -16,10 +16,12 @@
     "@hono/node-server": "^2.1.0",
     "@prisma/adapter-pg": "^7.9.1",
     "@prisma/client": "^7.9.1",
+    "bcrypt": "^6.0.0",
     "hono": "^4.13.1",
     "pg": "^8.23.0"
   },
   "devDependencies": {
+    "@types/bcrypt": "^6.0.0",
     "@types/node": "^26.2.0",
     "prisma": "^7.9.1",
     "tsx": "^4.23.11",
