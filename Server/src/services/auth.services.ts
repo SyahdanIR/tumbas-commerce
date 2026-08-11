@@ -1,7 +1,7 @@
 import prisma from "../lib/prisma";
 import bcrypt from "bcrypt";
 import { AppError } from "../errors/app.error";
-import { userInfo } from "node:os";
+import { sign } from "hono/jwt";
 
 export const registerUser = async (
   email: string,
@@ -42,5 +42,21 @@ export const loginUser = async (email: string, password: string) => {
     throw new AppError("Email atau Password salah!", 401);
   }
 
-  return existedEmail;
+  const token = await sign(
+    {
+      sub: existedEmail.id,
+      emai: existedEmail.email,
+      exp: Math.floor(Date.now() / 1000) + 60 * 60 * 24, //nnti pakein access dan refresh token, buat sekarang gini dlu
+    },
+    process.env.JWT_SECRET!,
+  );
+
+  return {
+    token,
+    user: {
+      id: existedEmail.id,
+      name: existedEmail.name,
+      email: existedEmail.email,
+    },
+  };
 };

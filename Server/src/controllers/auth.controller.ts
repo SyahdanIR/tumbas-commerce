@@ -14,5 +14,5 @@ export const login = async (c: Context) => {
 
   const user = await loginUser(email, password);
 
-  return c.json({ message: "Login berhasil", user }, 201);
+  return c.json({ message: "Login berhasil", ...user }, 200);
 };
