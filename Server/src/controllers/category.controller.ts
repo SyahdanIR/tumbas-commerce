@@ -14,3 +14,4 @@ export const createCategoryController = async (c: Context) => {
     201,
   );
 };
+
