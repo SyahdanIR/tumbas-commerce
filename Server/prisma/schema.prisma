@@ -17,6 +17,7 @@ model User {
   name      String
   email     String   @unique
   password  String
+  role      Role     @default(USER)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
@@ -90,6 +91,11 @@ enum OrderStatus {
   SHIPPED
   COMPLETED
   CANCELLED
+}
+
+enum Role {
+  USER
+  ADMIN
 }
 
 model OrderItem {

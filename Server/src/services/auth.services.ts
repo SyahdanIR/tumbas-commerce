@@ -46,6 +46,7 @@ export const loginUser = async (email: string, password: string) => {
     {
       sub: existedEmail.id,
       emai: existedEmail.email,
+      role: existedEmail.role,
       exp: Math.floor(Date.now() / 1000) + 60 * 60 * 24, //nnti pakein access dan refresh token, buat sekarang gini dlu
     },
     process.env.JWT_SECRET!,
