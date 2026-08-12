@@ -4,6 +4,7 @@ import {
   deleteProductController,
   editProductController,
   showAllProductController,
+  showProductByIdController,
 } from "../controllers/product.controller";
 import { authMiddleware } from "../middlewares/auth.middleware";
 import { adminMiddleware } from "../middlewares/admin.middleware";
@@ -18,6 +19,7 @@ productRoute.post(
 );
 
 productRoute.get("/", showAllProductController);
+
 productRoute.patch(
   "/:id",
   authMiddleware,
@@ -25,8 +27,10 @@ productRoute.patch(
   editProductController,
 );
 
+productRoute.get("/:id", showProductByIdController);
+
 productRoute.delete(
-  "/",
+  "/:id",
   authMiddleware,
   adminMiddleware,
   deleteProductController,

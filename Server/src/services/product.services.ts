@@ -25,6 +25,10 @@ export const createProduct = async (
 export const showAllProduct = async () => {
   const products = await prisma.product.findMany();
 
+  if (!products) {
+    throw new AppError("Product is empty", 404);
+  }
+
   return products;
 };
 
@@ -65,6 +69,18 @@ export const deleteProduct = async (id: string) => {
     where: {
       id: id,
     },
+  });
+
+  if (!product) {
+    throw new AppError("Product not found!", 404);
+  }
+
+  return product;
+};
+
+export const showProductById = async (id: string) => {
+  const product = await prisma.product.findUnique({
+    where: { id },
   });
 
   if (!product) {

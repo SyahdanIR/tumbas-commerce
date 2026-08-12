@@ -4,6 +4,7 @@ import {
   deleteProduct,
   editProduct,
   showAllProduct,
+  showProductById,
 } from "../services/product.services";
 
 export const createProductController = async (c: Context) => {
@@ -56,11 +57,22 @@ export const editProductController = async (c: Context) => {
 };
 
 export const deleteProductController = async (c: Context) => {
-  const body = await c.req.json();
-  const product = await deleteProduct(body.id);
+  const id = c.req.param("id") as string;
+  const product = await deleteProduct(id);
 
   return c.json({
     message: "Success deleting product!",
+    product,
+  });
+};
+
+export const showProductByIdController = async (c: Context) => {
+  const id = c.req.param("id") as string;
+
+  const product = await showProductById(id);
+
+  return c.json({
+    message: `Showing product with id: ${id}`,
     product,
   });
 };
