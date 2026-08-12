@@ -155,13 +155,13 @@ The backend will run using `tsx watch` so changes can be reflected automatically
 From the project root:
 
 ```bash
-docker compose -f Compose.yaml up --build
+docker compose up --build
 ```
 
 To stop the containers:
 
 ```bash
-docker compose -f Compose.yaml down
+docker compose down
 ```
 
 ## 🧩 Development Approach
