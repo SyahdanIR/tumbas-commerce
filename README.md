@@ -1,6 +1,5 @@
 # Tumbas Commerce
 
-<<<<<<< HEAD
 Tumbas Commerce is a full-stack e-commerce application built to practice and implement modern web development concepts, including REST API development, database management, authentication, and containerized development.
 
 The project is currently under development, with the backend being developed using Hono and TypeScript and the database managed through Prisma and Supabase PostgreSQL.
