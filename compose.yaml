@@ -1,0 +1,19 @@
+services:
+  tumbas-backend:
+    build: ./Server
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./Server:/app
+      - /app/node_modules
+    command: npm run dev
+
+  tumbas-frontend:
+    build: ./client
+    ports:
+      - "3001:3000"
+    volumes:
+      - ./client:/app
+      - /app/node_modules
+      - /app/.next
+    command: npm run dev

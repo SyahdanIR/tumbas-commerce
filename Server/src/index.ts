@@ -2,20 +2,29 @@ import { Hono } from "hono";
 import { serve } from "@hono/node-server";
 import mainRoute from "./routes";
 import { AppError } from "./errors/app.error";
+import { cors } from "hono/cors";
 
 const app = new Hono();
 const port = Number(process.env.PORT) || 3000;
 
+app.use(
+  "*",
+  cors({
+    origin: "http://localhost:3001",
+    credentials: true,
+  }),
+);
+
 app.route("/api", mainRoute);
 
 app.onError((err, c) => {
-  if(err instanceof AppError){
+  if (err instanceof AppError) {
     return c.json(
-    {
-      message: err.message,
-    },
-    err.statusCode
-  );
+      {
+        message: err.message,
+      },
+      err.statusCode,
+    );
   }
   console.error(err);
 
@@ -23,9 +32,9 @@ app.onError((err, c) => {
     {
       message: "Internal server Error",
     },
-    500
+    500,
   );
-})
+});
 
 app.get("/", (c) => {
   return c.json({
