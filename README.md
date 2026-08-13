@@ -1,22 +1,29 @@
 # Tumbas Commerce
 
-Tumbas Commerce is a full-stack e-commerce application built to practice and implement modern web development concepts, including REST API development, database management, authentication, and containerized development.
+Tumbas Commerce is a full-stack e-commerce web application built to practice and implement modern web development concepts, including REST API development, authentication, database management, frontend development, and containerized application development.
 
-The project is currently under development, with the backend being developed using Hono and TypeScript and the database managed through Prisma and Supabase PostgreSQL.
+The project uses a separate frontend and backend architecture. The frontend is built with Next.js, while the backend is built with Hono and TypeScript. PostgreSQL is used as the database and Prisma as the ORM.
 
 ## 🚀 Tech Stack
+
+### Frontend
+
+* **Next.js** — React framework for building the web application
+* **TypeScript** — Type-safe JavaScript development
+* **Tailwind CSS** — Utility-first CSS framework
 
 ### Backend
 
 * **Hono** — Lightweight web framework for building REST APIs
-* **TypeScript** — Type-safe JavaScript development
-* **Prisma 7** — ORM for database access and management
+* **TypeScript** — Type-safe backend development
 * **Node.js** — JavaScript runtime
+* **JWT** — Authentication and protected route handling
+* **bcrypt** — Password hashing
 
 ### Database
 
-* **PostgreSQL**
-* **Supabase** — PostgreSQL database hosting
+* **PostgreSQL** — Relational database
+* **Prisma** — ORM for database access and management
 
 ### Development & Infrastructure
 
@@ -24,112 +31,123 @@ The project is currently under development, with the backend being developed usi
 * **Docker Compose**
 * **WSL 2 / Ubuntu**
 * **NVM**
-* **tsx** — Development server with hot reload
-=======
-Tumbas Commerce is a full-stack e-commerce web application currently under development. The project is built with a separate frontend and backend architecture, with a focus on product and category management, authentication, cart, checkout, and order management.
+* **tsx** — TypeScript development server with hot reload
 
-## 🚀 Tech Stack
-
-### Frontend
-
-- Next.js
-- TypeScript
-- Tailwind CSS
-
-### Backend
-
-- Hono
-- TypeScript
-- Prisma ORM
-- PostgreSQL
-- Supabase
-- Docker
-- Docker Compose
->>>>>>> 7665eec (Add: Login & Register Page)
+---
 
 ## ✨ Features
 
-### Product Management
+### 🔐 Authentication
 
-<<<<<<< HEAD
-* View all products
-* View product details
+* User registration
+* User login
+* Password hashing with bcrypt
+* JWT-based authentication
+* Authentication middleware
+* Protected routes
+* Authentication state through cookies
+
+### 📦 Product Management
+
+* Display all products
+* Display product details
 * Create products
 * Update products
 * Delete products
 * Product stock management
 * Product categorization
 
-### Authentication
+### 🏷️ Category Management
 
-* User registration
-* User login
-* Protected user routes
-* Authentication-based access control
+* Create category
+* Display categories
+* Product categorization
 
-### Shopping
+### 🛒 Shopping
 
 * Product browsing
-* Shopping cart
+* Shopping cart page
 * Cart item management
 * Checkout flow
 * Order management
 
-> Some features are still being developed and may not yet be available in the current version.
+> Some shopping and order-related features are still under development.
 
-## 🏗️ Project Structure
+---
+
+## 🏗️ Project Architecture
+
+Tumbas uses a separate frontend and backend architecture.
 
 ```text
-tumbas-commerce/
-├── Server/
-=======
-- Create product
-- Display all products
-- Display product by ID
-- Update product
-- Delete product
-- Product stock management
+                    ┌─────────────────────┐
+                    │       Next.js       │
+                    │      Frontend       │
+                    │      Port 3001      │
+                    └──────────┬──────────┘
+                               │
+                               │ HTTP / REST API
+                               ▼
+                    ┌─────────────────────┐
+                    │        Hono         │
+                    │       Backend       │
+                    │      Port 3000      │
+                    └──────────┬──────────┘
+                               │
+                               ▼
+                    ┌─────────────────────┐
+                    │     Prisma ORM      │
+                    └──────────┬──────────┘
+                               │
+                               ▼
+                    ┌─────────────────────┐
+                    │     PostgreSQL      │
+                    └─────────────────────┘
+```
 
-### Category Management
-
-- Create category
-- Display categories
-- Product categorization
-
-### Planned Features
-
-- User authentication
-- Shopping cart
-- Checkout
-- Order management
-- Address management
+---
 
 ## 📁 Project Structure
 
 ```text
 tumbas-commerce/
-├── Backend/
->>>>>>> 7665eec (Add: Login & Register Page)
+├── Server/
 │   ├── src/
 │   │   ├── controllers/
 │   │   ├── services/
 │   │   ├── routes/
-<<<<<<< HEAD
 │   │   ├── middlewares/
-│   │   └── ...
+│   │   └── index.ts
 │   ├── prisma/
 │   │   └── schema.prisma
+│   ├── Dockerfile
 │   ├── package.json
 │   └── ...
-├── Compose.yaml
+│
+├── client/
+│   ├── src/
+│   │   ├── app/
+│   │   │   ├── (auth)/
+│   │   │   └── (dashboard)/
+│   │   ├── components/
+│   │   ├── services/
+│   │   └── lib/
+│   ├── public/
+│   ├── Dockerfile
+│   ├── package.json
+│   └── ...
+│
+├── compose.yaml
 └── README.md
 ```
 
-The backend follows a layered structure to separate responsibilities between routes, controllers, services, and database operations.
+The backend follows a layered architecture to separate responsibilities between routes, controllers, services, middleware, and database operations.
+
+---
 
 ## 🗄️ Database Design
 
-The planned database structure consists of several main entities:
+The application is designed around several main entities:
 
 ```text
 User
@@ -147,13 +165,22 @@ Category
  └── Product
 ```
 
-This structure allows the application to handle product management, shopping carts, customer orders, and product categorization.
+This structure allows Tumbas to manage users, products, product categories, shopping carts, and customer orders.
+
+---
 
 ## 🔌 API
 
 The backend provides RESTful API endpoints for interacting with the application.
 
-Example product endpoints:
+### Authentication
+
+| Method | Endpoint         | Description         |
+| ------ | ---------------- | ------------------- |
+| `POST` | `/auth/register` | Register a new user |
+| `POST` | `/auth/login`    | Login user          |
+
+### Products
 
 | Method   | Endpoint        | Description       |
 | -------- | --------------- | ----------------- |
@@ -163,107 +190,88 @@ Example product endpoints:
 | `PATCH`  | `/products/:id` | Update a product  |
 | `DELETE` | `/products/:id` | Delete a product  |
 
-Additional endpoints for authentication, users, carts, and orders are being developed as the project progresses.
+### Categories
+
+| Method | Endpoint      | Description        |
+| ------ | ------------- | ------------------ |
+| `GET`  | `/categories` | Get all categories |
+| `POST` | `/categories` | Create a category  |
+
+> API endpoints will continue to be expanded as the application develops.
+
+---
 
 ## ⚙️ Getting Started
-
-### 1. Clone the repository
-=======
-│   │   └── middlewares/
-│   ├── prisma/
-│   │   └── schema.prisma
-│   ├── Dockerfile
-│   ├── package.json
-│   └── ...
-│
-├── Frontend/
-│   ├── app/
-│   ├── components/
-│   ├── public/
-│   ├── Dockerfile
-│   ├── package.json
-│   └── ...
-│
-├── compose.yaml
-└── README.md
-```
-
-## 🛠️ Getting Started
 
 ### Prerequisites
 
 Make sure you have installed:
 
-- Node.js
-- Docker
-- Docker Compose
-- PostgreSQL database / Supabase
+* Node.js
+* npm
+* Docker
+* Docker Compose
+* PostgreSQL database
 
 ### 1. Clone the Repository
->>>>>>> 7665eec (Add: Login & Register Page)
 
 ```bash
-git clone https://github.com/SyahdanIR/tumbas-commerce.git
+git clone <repository-url>
 cd tumbas-commerce
 ```
 
-<<<<<<< HEAD
-### 2. Install dependencies
+### 2. Configure Environment Variables
 
-Move into the backend directory:
+Create an `.env` file inside the `Server` directory.
+
+```env
+DATABASE_URL="your_database_url"
+JWT_SECRET="your_jwt_secret"
+```
+
+Adjust the environment variables according to your local configuration.
+
+### 3. Install Dependencies
+
+For the backend:
 
 ```bash
 cd Server
 npm install
 ```
 
-### 3. Configure environment variables
-
-Create a `.env` file inside the `Server` directory:
-
-```env
-DATABASE_URL="your_supabase_postgresql_connection_string"
-```
-
-Add other environment variables required by the application as development continues.
-
-### 4. Run the development server
+For the frontend:
 
 ```bash
+cd ../client
+npm install
+```
+
+### 4. Run the Development Server
+
+Backend:
+
+```bash
+cd Server
 npm run dev
 ```
 
-The backend will run using `tsx watch` so changes can be reflected automatically during development.
+Frontend:
 
-### 5. Run with Docker
-=======
-### 2. Environment Variables
-
-Create an `.env` file inside the `Backend` directory:
-
-```env
-DATABASE_URL="your_database_url"
+```bash
+cd client
+npm run dev
 ```
 
-Adjust the environment variables according to your local configuration.
-
-### 3. Run with Docker
-
-The project uses Docker Compose to run the frontend and backend services.
->>>>>>> 7665eec (Add: Login & Register Page)
+### 5. Run with Docker Compose
 
 From the project root:
 
 ```bash
-<<<<<<< HEAD
-docker compose up --build
-```
-
-=======
 docker compose up
 ```
 
-To rebuild the images:
+To rebuild the Docker images:
 
 ```bash
 docker compose up --build
@@ -275,135 +283,91 @@ To run the containers in detached mode:
 docker compose up -d
 ```
 
->>>>>>> 7665eec (Add: Login & Register Page)
 To stop the containers:
 
 ```bash
 docker compose down
 ```
 
-<<<<<<< HEAD
-## 🧩 Development Approach
+Because the project uses `compose.yaml` at the repository root, there is no need to specify the `-f` option.
 
-The project is developed incrementally, starting from the backend foundation and database layer before implementing the complete e-commerce flow.
-
-Current development focus includes:
-
-* [x] Backend project setup
-* [x] Hono + TypeScript setup
-* [x] Prisma integration
-* [x] Supabase PostgreSQL connection
-* [x] Product API
-* [ ] Database schema completion
-* [ ] Authentication
-* [ ] Cart system
-* [ ] Order & checkout system
-* [ ] Frontend application
-* [ ] Production deployment
-
-## 🎯 Project Goals
-
-This project was created to strengthen practical experience in:
-
-* Building RESTful APIs
-* Backend architecture
-* TypeScript development
-* Prisma ORM
-* PostgreSQL database design
-* Authentication and authorization
-* E-commerce business logic
-* Docker-based development
-* Full-stack application development
-
-## 📌 Project Status
-
-**🚧 In Development**
-
-Tumbas Commerce is an ongoing project. New features and improvements will be added progressively as the development process continues.
-=======
-No `-f` option is required because the project uses `compose.yaml` at the root of the repository.
+---
 
 ## 🌐 Local Development
 
-After running Docker Compose:
+When running the application with Docker Compose:
 
 ```text
 Frontend → http://localhost:3001
 Backend  → http://localhost:3000
 ```
 
-The frontend is built with Next.js and communicates with the Hono REST API running on the backend service.
+The Next.js frontend communicates with the Hono backend through REST API requests.
 
-## 🔌 API
+---
 
-The backend provides REST API endpoints for managing products and categories.
-
-### Products
-
-| Method | Endpoint        | Description       |
-| ------ | --------------- | ----------------- |
-| GET    | `/products`     | Get all products  |
-| GET    | `/products/:id` | Get product by ID |
-| POST   | `/products`     | Create a product  |
-| PATCH  | `/products/:id` | Update a product  |
-| DELETE | `/products/:id` | Delete a product  |
-
-### Categories
-
-| Method | Endpoint      | Description        |
-| ------ | ------------- | ------------------ |
-| GET    | `/categories` | Get all categories |
-| POST   | `/categories` | Create a category  |
-
-> API endpoints will continue to be expanded as development progresses.
-
-## 🏗️ Architecture
-
-Tumbas uses a separate frontend and backend architecture:
-
-```text
-┌─────────────────────┐
-│      Next.js        │
-│      Frontend       │
-│     Port: 3001      │
-└──────────┬──────────┘
-           │
-           │ HTTP / REST API
-           ▼
-┌─────────────────────┐
-│       Hono          │
-│       Backend       │
-│     Port: 3000      │
-└──────────┬──────────┘
-           │
-           ▼
-┌─────────────────────┐
-│      Prisma ORM     │
-└──────────┬──────────┘
-           │
-           ▼
-┌─────────────────────┐
-│ PostgreSQL / Supabase│
-└─────────────────────┘
-```
-
-## 📌 Development Status
+## 🧩 Development Status
 
 🚧 **In Development**
 
-Tumbas Commerce is actively being developed. Core product and category CRUD functionality is currently implemented, while authentication, cart, checkout, and order-related features are planned for future development.
->>>>>>> 7665eec (Add: Login & Register Page)
+Current progress:
+
+* [x] Project setup
+* [x] Hono + TypeScript setup
+* [x] Next.js frontend setup
+* [x] Prisma integration
+* [x] PostgreSQL database connection
+* [x] Docker configuration
+* [x] Docker Compose configuration
+* [x] Product CRUD
+* [x] Category management
+* [x] User registration
+* [x] User login
+* [x] JWT authentication
+* [x] Authentication middleware
+* [x] Protected routes
+* [x] Login page
+* [x] Register page
+* [x] Product page
+* [x] Cart page
+* [ ] Complete shopping cart functionality
+* [ ] Checkout system
+* [ ] Order management
+* [ ] Address management
+* [ ] Production deployment
+
+---
+
+## 🎯 Project Goals
+
+Tumbas Commerce is developed to strengthen practical experience in:
+
+* Full-stack web application development
+* RESTful API development
+* Backend architecture
+* TypeScript development
+* Next.js development
+* Authentication and authorization
+* Prisma ORM
+* PostgreSQL database design
+* E-commerce business logic
+* Docker and containerized development
+* Frontend and backend integration
+
+---
+
+## 📌 Project Status
+
+**🚧 Active Development**
+
+Tumbas Commerce is an ongoing project. The core authentication, product management, category management, and frontend foundation have been implemented. Additional e-commerce functionality such as cart processing, checkout, and order management will continue to be developed.
+
+---
 
 ## 👨‍💻 Author
 
 **Syahdan Izzur Rosuli**
 
-<<<<<<< HEAD
-* GitHub: [SyahdanIR](https://github.com/SyahdanIR)
-* LinkedIn: [Syahdan Izzur Rosuli](https://www.linkedin.com/in/syahdan-izzur-rosuli/)
-* Portfolio: [syahdanportfolio.netlify.app](https://syahdanportfolio.netlify.app/)
-=======
-- GitHub: [SyahdanIR](https://github.com/SyahdanIR)
-- Portfolio: [syahdanportfolio.netlify.app](https://syahdanportfolio.netlify.app/)
-- LinkedIn: [Syahdan Izzur Rosuli](https://www.linkedin.com/in/syahdan-izzur-rosuli/)
->>>>>>> 7665eec (Add: Login & Register Page)
+* GitHub: **SyahdanIR**
+* LinkedIn: **Syahdan Izzur Rosuli**
+* Portfolio: **Syahdan Portfolio**
